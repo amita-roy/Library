@@ -1,5 +1,6 @@
 let myLibrary = [];
 let addNewBookButton = document.querySelector("button.newBook");
+let statusButton = document.querySelector("button.status");
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -26,7 +27,7 @@ function bookCard(book, index) {
               <h5 class="card-title" id="itemName">${book.title}</h5>
               <p class="card-text" id="itemDesc">${book.author}</p>
               <p class="card-text">${book.pages}</p>
-              <p class="card-text">${book.read}</p>
+              <button class="card-text status">${book.read}</button>
               <button class="delete" data-id=${index}>Delete</button>
           </div>
       </div>
@@ -44,7 +45,7 @@ $("form").on("submit", function (event) {
   event.preventDefault();
   content = "";
   let test = $(this).serializeArray();
-  addBookToLibrary(test[0].value, test[1].value, test[2].value, test[3].value);
+  addBookToLibrary(test[0].value, test[1].value, test[2].value);
   displayAllBooks(myLibrary);
   document.querySelector(".books-grid").innerHTML = content;
   this.reset();
@@ -58,6 +59,10 @@ $("form").on("submit", function (event) {
     console.log("AFTER", myLibrary);
     displayAllBooks(myLibrary);
     document.querySelector(".books-grid").innerHTML = content;
+  });
+
+  statusButton.addEventListener("click", function () {
+    $(this).html() === "Read" ? $(this).html("Not Read") : $(this).html("Read");
   });
 
   if ($(".formContainer").hasClass("show")) {
