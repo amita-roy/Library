@@ -1,5 +1,5 @@
 let myLibrary = [];
-let addNewBookButton = document.querySelector('button');
+let addNewBookButton = document.querySelector("button");
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -16,7 +16,7 @@ function addBookToLibrary(title, author, pages, read) {
   myLibrary.push(newBook);
 }
 
-let content = '';
+let content = "";
 
 function bookCard(book) {
   return `
@@ -40,15 +40,16 @@ function displayAllBooks(books) {
   });
 }
 
-addBookToLibrary('Anything', 'Me', 'unlimited', 'read');
-addBookToLibrary('Elias', 'Me', '500', 'read');
-addBookToLibrary('Amita', 'You', '300', 'not read');
-addBookToLibrary('VsCode', 'It', '100', 'not read');
+addNewBookButton.addEventListener("click", function () {
+  $(".formContainer").show();
+});
 
-displayAllBooks(myLibrary);
-document.querySelector('.books-grid').innerHTML = content;
-
-addNewBookButton.addEventListener('click', function () {
-  // $('.formContainer').css('display', 'block');
-  $('.formContainer').show();
+$("form").on("submit", function (event) {
+  event.preventDefault();
+  let test = $(this).serializeArray();
+  console.log(test[0].value);
+  addBookToLibrary(test[0].value, test[1].value, test[2].value, test[3].value);
+  displayAllBooks(myLibrary);
+  document.querySelector(".books-grid").innerHTML = content;
+  this.reset();
 });
