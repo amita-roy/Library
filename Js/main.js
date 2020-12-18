@@ -1,6 +1,5 @@
 let myLibrary = [];
-let addNewBookButton = document.querySelector('button.newBook');
-let deleteButton = document.querySelector('button.delete');
+let addNewBookButton = document.querySelector("button.newBook");
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -17,7 +16,7 @@ function addBookToLibrary(title, author, pages, read) {
   myLibrary.push(newBook);
 }
 
-let content = '';
+let content = "";
 
 function bookCard(book, index) {
   return `
@@ -41,25 +40,35 @@ function displayAllBooks(books) {
   });
 }
 
-$('form').on('submit', function (event) {
+$("form").on("submit", function (event) {
   event.preventDefault();
-  content = '';
+  content = "";
   let test = $(this).serializeArray();
-  // console.log(test[0].value);
   addBookToLibrary(test[0].value, test[1].value, test[2].value, test[3].value);
   displayAllBooks(myLibrary);
-  document.querySelector('.books-grid').innerHTML = content;
+  document.querySelector(".books-grid").innerHTML = content;
   this.reset();
+  let deleteButton = document.querySelector("button.delete");
+  console.log(deleteButton.dataset.id);
 
-  if ($('.formContainer').hasClass('show')) {
-    $('.formContainer').addClass('hide');
-    $('.formContainer').removeClass('show');
+  deleteButton.addEventListener("click", function () {
+    content = "";
+    console.log("BEFORE", myLibrary);
+    myLibrary = myLibrary.filter((_, index) => index != this.dataset.id);
+    console.log("AFTER", myLibrary);
+    displayAllBooks(myLibrary);
+    document.querySelector(".books-grid").innerHTML = content;
+  });
+
+  if ($(".formContainer").hasClass("show")) {
+    $(".formContainer").addClass("hide");
+    $(".formContainer").removeClass("show");
   }
 });
 
-addNewBookButton.addEventListener('click', function () {
-  if ($('.formContainer').hasClass('hide')) {
-    $('.formContainer').addClass('show');
-    $('.formContainer').removeClass('hide');
+addNewBookButton.addEventListener("click", function () {
+  if ($(".formContainer").hasClass("hide")) {
+    $(".formContainer").addClass("show");
+    $(".formContainer").removeClass("hide");
   }
 });
