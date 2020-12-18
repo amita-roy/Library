@@ -40,16 +40,21 @@ function displayAllBooks(books) {
   });
 }
 
-addNewBookButton.addEventListener("click", function () {
-  $(".formContainer").show();
-});
-
 $("form").on("submit", function (event) {
   event.preventDefault();
+  content = '';
   let test = $(this).serializeArray();
-  console.log(test[0].value);
+  // console.log(test[0].value);
   addBookToLibrary(test[0].value, test[1].value, test[2].value, test[3].value);
   displayAllBooks(myLibrary);
   document.querySelector(".books-grid").innerHTML = content;
   this.reset();
+  $(this).hide();
+});
+
+addNewBookButton.addEventListener("click", function () {
+  if (".formContainer"  ) {
+    
+  }
+  $(".formContainer").show();
 });
