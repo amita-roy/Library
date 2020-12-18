@@ -14,7 +14,6 @@ Book.prototype.info = function () {
 function addBookToLibrary(title, author, pages, read) {
   // do stuff here
   let newBook = new Book(title, author, pages, read);
-  newBook.prototype = Object.create(Book.prototype);
   myLibrary.push(newBook);
 }
 
