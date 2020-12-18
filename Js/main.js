@@ -1,7 +1,6 @@
 let myLibrary = [];
 
 function Book(title, author, pages, read) {
-  // the constructor...
   this.title = title;
   this.author = author;
   this.pages = pages;
@@ -12,12 +11,36 @@ Book.prototype.info = function () {
 };
 
 function addBookToLibrary(title, author, pages, read) {
-  // do stuff here
   let newBook = new Book(title, author, pages, read);
   myLibrary.push(newBook);
 }
 
-addBookToLibrary('Anything', 'Me', 'unlimited', 'read');
+let content = '';
 
-console.log(myLibrary);
-console.log(myLibrary[0].info());
+function displayAllBooks(books) {
+  books.forEach((book) => {
+    content += `
+    <div id="book" class="col-md-4 mt-2">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title" id="itemName">${book.title}</h5>
+                <p class="card-text" id="itemDesc">${book.author}</p>
+                <p class="card-text">${book.pages}</p>
+                <p class="card-text">${book.read}</p>
+                <a href="#" class="btn btn-primary" id="addCart">Delete</a>
+            </div>
+        </div>
+      </div>
+  `;
+  });
+}
+
+addBookToLibrary("Anything", "Me", "unlimited", "read");
+addBookToLibrary("Elias", "Me", "500", "read");
+addBookToLibrary("Amita", "You", "300", "not read");
+addBookToLibrary("VsCode", "It", "100", "not read");
+
+displayAllBooks(myLibrary);
+document.querySelector(".books-grid").innerHTML = content;
+
+console.log(content);
