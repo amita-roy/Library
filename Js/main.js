@@ -1,5 +1,6 @@
 let myLibrary = [];
-let addNewBookButton = document.querySelector('button');
+let addNewBookButton = document.querySelector('button.newBook');
+let deleteButton = document.querySelector('button.delete');
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -18,7 +19,7 @@ function addBookToLibrary(title, author, pages, read) {
 
 let content = '';
 
-function bookCard(book) {
+function bookCard(book, index) {
   return `
   <div id="book" class="col-md-4 mt-2">
       <div class="card" style="width: 18rem;">
@@ -27,7 +28,7 @@ function bookCard(book) {
               <p class="card-text" id="itemDesc">${book.author}</p>
               <p class="card-text">${book.pages}</p>
               <p class="card-text">${book.read}</p>
-              <a href="#" class="btn btn-primary" id="addCart">Delete</a>
+              <button class="delete" data-id=${index}>Delete</button>
           </div>
       </div>
     </div>
@@ -35,8 +36,8 @@ function bookCard(book) {
 }
 
 function displayAllBooks(books) {
-  books.forEach((book) => {
-    content += bookCard(book);
+  books.forEach((book, index) => {
+    content += bookCard(book, index);
   });
 }
 
