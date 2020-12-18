@@ -1,4 +1,5 @@
 let myLibrary = [];
+let addNewBookButton = document.querySelector('button');
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -47,4 +48,7 @@ addBookToLibrary('VsCode', 'It', '100', 'not read');
 displayAllBooks(myLibrary);
 document.querySelector('.books-grid').innerHTML = content;
 
-console.log(content);
+addNewBookButton.addEventListener('click', function () {
+  // $('.formContainer').css('display', 'block');
+  $('.formContainer').show();
+});
