@@ -1,5 +1,5 @@
 let myLibrary = [];
-let addNewBookButton = document.querySelector("button.newBook");
+let addNewBookButton = document.querySelector('button.newBook');
 
 function Book(title, author, pages) {
   this.title = title;
@@ -10,14 +10,14 @@ Book.prototype.info = function () {
   return `${this.title}, by ${this.author}, ${this.pages} pages`;
 };
 
-Book.prototype.read = "Not Read";
+Book.prototype.read = 'Not Read';
 
 function addBookToLibrary(title, author, pages) {
   let newBook = new Book(title, author, pages);
   myLibrary.push(newBook);
 }
 
-let content = "";
+let content = '';
 
 function bookCard(book, index) {
   return `
@@ -41,41 +41,39 @@ function displayAllBooks(books) {
   });
 }
 
-$("form").on("submit", function (event) {
+$('form').on('submit', function (event) {
   event.preventDefault();
-  content = "";
+  content = '';
   let test = $(this).serializeArray();
+
   addBookToLibrary(test[0].value, test[1].value, test[2].value);
   displayAllBooks(myLibrary);
-  document.querySelector(".books-grid").innerHTML = content;
+  document.querySelector('.books-grid').innerHTML = content;
   this.reset();
-  let deleteButton = document.querySelector("button.delete");
-  console.log(deleteButton.dataset.id);
 
-  deleteButton.addEventListener("click", function () {
-    content = "";
-    console.log("BEFORE", myLibrary);
-    myLibrary = myLibrary.filter((_, index) => index != this.dataset.id);
-    console.log("AFTER", myLibrary);
+  let deleteButton = document.querySelector('button.delete');
+  let statusButton = document.querySelector('button.status');
+
+  deleteButton.addEventListener('click', function () {
+    content = '';
+    console.log('BEFORE', myLibrary);
+    id = this.dataset.id;
+    myLibrary = myLibrary.filter((_, index) => index != id);
+    console.log('AFTER', myLibrary);
     displayAllBooks(myLibrary);
-    document.querySelector(".books-grid").innerHTML = content;
+    document.querySelector('.books-grid').innerHTML = content;
   });
 
-  let statusButton = document.querySelector("button.status");
-
-  statusButton.addEventListener("click", function () {
-    $(this).html() === "Read" ? $(this).html("Not Read") : $(this).html("Read");
+  statusButton.addEventListener('click', function () {
+    $(this).html() === 'Read' ? $(this).html('Not Read') : $(this).html('Read');
   });
 
-  if ($(".formContainer").hasClass("show")) {
-    $(".formContainer").addClass("hide");
-    $(".formContainer").removeClass("show");
+  if ($('.form').hasClass('show')) {
+    $('.form').addClass('hide');
+    $('.form').removeClass('show');
   }
 });
 
-addNewBookButton.addEventListener("click", function () {
-  if ($(".formContainer").hasClass("hide")) {
-    $(".formContainer").addClass("show");
-    $(".formContainer").removeClass("hide");
-  }
+addNewBookButton.addEventListener('click', function () {
+  $('.form').toggleClass('hide show');
 });
