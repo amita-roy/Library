@@ -1,19 +1,17 @@
 let myLibrary = [];
 let addNewBookButton = document.querySelector("button.newBook");
-let statusButton = document.querySelector("button.status");
 
-function Book(title, author, pages, read) {
+function Book(title, author, pages) {
   this.title = title;
   this.author = author;
   this.pages = pages;
-  this.read = read;
 }
 Book.prototype.info = function () {
-  return `${this.title}, by ${this.author}, ${this.pages} pages, ${this.read}`;
+  return `${this.title}, by ${this.author}, ${this.pages} pages`;
 };
 
-function addBookToLibrary(title, author, pages, read) {
-  let newBook = new Book(title, author, pages, read);
+function addBookToLibrary(title, author, pages) {
+  let newBook = new Book(title, author, pages);
   myLibrary.push(newBook);
 }
 
@@ -27,7 +25,7 @@ function bookCard(book, index) {
               <h5 class="card-title" id="itemName">${book.title}</h5>
               <p class="card-text" id="itemDesc">${book.author}</p>
               <p class="card-text">${book.pages}</p>
-              <button class="card-text status">${book.read}</button>
+              <button class="card-text status">Read</button>
               <button class="delete" data-id=${index}>Delete</button>
           </div>
       </div>
@@ -61,9 +59,12 @@ $("form").on("submit", function (event) {
     document.querySelector(".books-grid").innerHTML = content;
   });
 
+  let statusButton = document.querySelector("button.status");
+
   statusButton.addEventListener("click", function () {
     $(this).html() === "Read" ? $(this).html("Not Read") : $(this).html("Read");
   });
+  
 
   if ($(".formContainer").hasClass("show")) {
     $(".formContainer").addClass("hide");
