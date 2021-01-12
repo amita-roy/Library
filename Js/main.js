@@ -39,11 +39,6 @@ function bookCard(book, index) {
 `;
 }
 
-function deleteBook(index) {
-  myLibrary.splice(index, 1);
-  render();
-}
-
 function displayAllBooks(books) {
   books.forEach((book, index) => {
     content += bookCard(book, index);
@@ -82,7 +77,6 @@ $('form').on('submit', function (event) {
     $('.form').addClass('hide');
     $('.form').removeClass('show');
   }
-
 });
 
 addNewBookButton.addEventListener('click', () => {
