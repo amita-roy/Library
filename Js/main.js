@@ -13,7 +13,7 @@ Book.prototype.info = function () {
 Book.prototype.read = "Not Read";
 
 function addBookToLibrary(title, author, pages) {
-  let newBook = new Book(title, author, pages);
+  const newBook = new Book(title, author, pages);
   myLibrary.push(newBook);
 }
 
@@ -28,17 +28,29 @@ function bookCard(book, index) {
               <p class="card-text" id="itemDesc">${book.author}</p>
               <p class="card-text">${book.pages}</p>
               <button class="card-text status">${book.read}</button>
-              <button class="delete" data-id=${index}>Delete</button>
+              <button onclick="deleteBook(${index})" class="delete" data-id=${index}>Delete</button>
           </div>
       </div>
     </div>
 `;
 }
 
+function deleteBook(index) {
+  myLibrary.splice(index, 1);
+  render();
+}
+
 function displayAllBooks(books) {
   books.forEach((book, index) => {
     content += bookCard(book, index);
   });
+}
+
+function render() {
+  event.preventDefault();
+  content = "";
+  displayAllBooks(myLibrary);
+  document.querySelector(".books-grid").innerHTML = content;
 }
 
 $("form").on("submit", function (event) {
@@ -63,6 +75,7 @@ $("form").on("submit", function (event) {
 
   let statusButton = document.querySelector("button.status");
 
+
   statusButton.addEventListener("click", function () {
     $(this).html() === "Read" ? $(this).html("Not Read") : $(this).html("Read");
   });
@@ -71,6 +84,7 @@ $("form").on("submit", function (event) {
     $(".formContainer").addClass("hide");
     $(".formContainer").removeClass("show");
   }
+
 });
 
 addNewBookButton.addEventListener("click", function () {
