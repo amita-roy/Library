@@ -1,4 +1,3 @@
-/* eslint func-names: ["error", "never"] */
 /* eslint-env jquery */
 
 let myLibrary = [];
@@ -10,9 +9,12 @@ function Book(title, author, pages, id) {
   this.author = author;
   this.pages = pages;
 }
-Book.prototype.info = function () {
-  return `${this.title}, by ${this.author}, ${this.pages} pages`;
-};
+
+function bookInfo(book) {
+  return `${book.title}, by ${book.author}, ${book.pages} pages`;
+}
+
+Book.prototype.info = bookInfo(this);
 
 Book.prototype.read = 'Not Read';
 
@@ -23,29 +25,27 @@ function addBookToLibrary(title, author, pages, id) {
 
 let content = '';
 
-function bookCard(book, index) {
-  return `
-  <div id="book-${index}" class="col-md-4 mt-2">
-      <div class="card" style="width: 18rem;">
-          <div class="card-body">
-              <h5 class="card-title" id="itemName">${book.title}</h5>
-              <p class="card-text" id="itemDesc">${book.author}</p>
-              <p class="card-text">${book.pages}</p>
-              <button class="card-text status">${book.read}</button>
-              <button class="delete" id=${index} data-id=${index}>Delete</button>
-          </div>
-      </div>
+const bookCard = (book, index) => `
+<div id="book-${index}" class="col-md-4 mt-2">
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title" id="itemName">${book.title}</h5>
+            <p class="card-text" id="itemDesc">${book.author}</p>
+            <p class="card-text">${book.pages}</p>
+            <button class="card-text status">${book.read}</button>
+            <button class="delete" id=${index} data-id=${index}>Delete</button>
+        </div>
     </div>
+  </div>
 `;
-}
 
-function displayAllBooks(books) {
+const displayAllBooks = (books) => {
   books.forEach((book, index) => {
     content += bookCard(book, index);
   });
-}
+};
 
-$('form').on('submit', function (event) {
+function formSubmission(event) {
   event.preventDefault();
   content = '';
   const test = $(this).serializeArray();
@@ -66,18 +66,23 @@ $('form').on('submit', function (event) {
         card.remove();
       }
     });
-    statusButton.addEventListener('click', function () {
+
+    function readStatus() {
       return $(this).html() === 'Read'
         ? $(this).html('Not Read')
         : $(this).html('Read');
-    });
+    }
+
+    statusButton.addEventListener('click', readStatus);
   });
 
   if ($('.form').hasClass('show')) {
     $('.form').addClass('hide');
     $('.form').removeClass('show');
   }
-});
+}
+
+$('form').on('submit', formSubmission);
 
 addNewBookButton.addEventListener('click', () => {
   $('.form').toggleClass('hide show');
