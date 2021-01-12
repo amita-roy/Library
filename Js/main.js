@@ -10,6 +10,8 @@ Book.prototype.info = function () {
   return `${this.title}, by ${this.author}, ${this.pages} pages`;
 };
 
+Book.prototype.read = "Not Read";
+
 function addBookToLibrary(title, author, pages) {
   let newBook = new Book(title, author, pages);
   myLibrary.push(newBook);
@@ -25,7 +27,7 @@ function bookCard(book, index) {
               <h5 class="card-title" id="itemName">${book.title}</h5>
               <p class="card-text" id="itemDesc">${book.author}</p>
               <p class="card-text">${book.pages}</p>
-              <button class="card-text status">Read</button>
+              <button class="card-text status">${book.read}</button>
               <button class="delete" data-id=${index}>Delete</button>
           </div>
       </div>
@@ -64,7 +66,6 @@ $("form").on("submit", function (event) {
   statusButton.addEventListener("click", function () {
     $(this).html() === "Read" ? $(this).html("Not Read") : $(this).html("Read");
   });
-  
 
   if ($(".formContainer").hasClass("show")) {
     $(".formContainer").addClass("hide");
