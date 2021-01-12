@@ -1,27 +1,24 @@
-/* eslint-env jquery */
-
 let myLibrary = [];
 const addNewBookButton = document.querySelector('button.newBook');
 
-function Book(title, author, pages, id) {
-  this.id = id;
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
+class Book {
+  constructor(title, author, pages, id) {
+    this.id = id;
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = 'Not Read';
+  }
+
+  info() {
+    return `${this.title}, by ${this.author}, ${this.pages} pages`;
+  }
 }
 
-function bookInfo(book) {
-  return `${book.title}, by ${book.author}, ${book.pages} pages`;
-}
-
-Book.prototype.info = bookInfo(this);
-
-Book.prototype.read = 'Not Read';
-
-function addBookToLibrary(title, author, pages, id) {
+const addBookToLibrary = (title, author, pages, id) => {
   const newBook = new Book(title, author, pages, id);
   myLibrary.push(newBook);
-}
+};
 
 let content = '';
 
@@ -45,15 +42,16 @@ const displayAllBooks = (books) => {
   });
 };
 
-function formSubmission(event) {
+const formSubmission = (event) => {
   event.preventDefault();
   content = '';
-  const test = $(this).serializeArray();
+  const form = event.target;
+  const values = $(form).serializeArray();
   const index = myLibrary.length;
-  addBookToLibrary(test[0].value, test[1].value, test[2].value, index);
+  addBookToLibrary(values[0].value, values[1].value, values[2].value, index);
   displayAllBooks(myLibrary);
   document.querySelector('.books-grid').innerHTML = content;
-  this.reset();
+  form.reset();
 
   myLibrary.forEach((book, index) => {
     const deleteButton = document.querySelector(`#book-${index} button.delete`);
@@ -67,11 +65,9 @@ function formSubmission(event) {
       }
     });
 
-    function readStatus() {
-      return $(this).html() === 'Read'
-        ? $(this).html('Not Read')
-        : $(this).html('Read');
-    }
+    const readStatus = () => ($(statusButton).html() === 'Read'
+      ? $(statusButton).html('Not Read')
+      : $(statusButton).html('Read'));
 
     statusButton.addEventListener('click', readStatus);
   });
@@ -80,7 +76,7 @@ function formSubmission(event) {
     $('.form').addClass('hide');
     $('.form').removeClass('show');
   }
-}
+};
 
 $('form').on('submit', formSubmission);
 
