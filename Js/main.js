@@ -1,5 +1,8 @@
+/* eslint func-names: ["error", "never"] */
+/* eslint-env jquery */
+
 let myLibrary = [];
-let addNewBookButton = document.querySelector('button.newBook');
+const addNewBookButton = document.querySelector('button.newBook');
 
 function Book(title, author, pages, id) {
   this.id = id;
@@ -14,7 +17,7 @@ Book.prototype.info = function () {
 Book.prototype.read = 'Not Read';
 
 function addBookToLibrary(title, author, pages, id) {
-  let newBook = new Book(title, author, pages, id);
+  const newBook = new Book(title, author, pages, id);
   myLibrary.push(newBook);
 }
 
@@ -45,31 +48,26 @@ function displayAllBooks(books) {
 $('form').on('submit', function (event) {
   event.preventDefault();
   content = '';
-  let test = $(this).serializeArray();
-  let index = myLibrary.length;
+  const test = $(this).serializeArray();
+  const index = myLibrary.length;
   addBookToLibrary(test[0].value, test[1].value, test[2].value, index);
   displayAllBooks(myLibrary);
   document.querySelector('.books-grid').innerHTML = content;
   this.reset();
-  console.log(index);
 
   myLibrary.forEach((book, index) => {
-    let deleteButton = document.querySelector(`#book-${index} button.delete`);
-    let statusButton = document.querySelector(`#book-${index} button.status`);
+    const deleteButton = document.querySelector(`#book-${index} button.delete`);
+    const statusButton = document.querySelector(`#book-${index} button.status`);
 
-    deleteButton.addEventListener('click', function () {
-      // content = '';
-      console.log('BEFORE', myLibrary);
-      id = this.dataset.id;
+    deleteButton.addEventListener('click', () => {
       myLibrary = myLibrary.filter((book) => book.id !== index);
-      console.log('AFTER', myLibrary);
       const card = document.getElementById(`book-${index}`);
       if (card) {
         card.remove();
       }
     });
     statusButton.addEventListener('click', function () {
-      $(this).html() === 'Read'
+      return $(this).html() === 'Read'
         ? $(this).html('Not Read')
         : $(this).html('Read');
     });
@@ -81,6 +79,6 @@ $('form').on('submit', function (event) {
   }
 });
 
-addNewBookButton.addEventListener('click', function () {
+addNewBookButton.addEventListener('click', () => {
   $('.form').toggleClass('hide show');
 });
