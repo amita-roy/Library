@@ -41,7 +41,7 @@ Javascript
 
 Contributions, issues and feature requests are welcome!
 
-Feel free to check the [issues page](https://github.com/danielsokil/social-media/issues).
+Feel free to check the [issues page](https://github.com/Amita-Roy/Library/issues).
 
 ## Show your support
 
